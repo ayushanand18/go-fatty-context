@@ -7,29 +7,36 @@ import (
 	"time"
 )
 
+type TestContext struct {
+	Name    string
+	Context context.Context
+}
+
 // get the size of payloads we are going to test
 func getContextInputPayloadSize() []int64 {
 	return []int64{100, 1000, 1000000}
 }
 
 // get all the contexts to run tests on
-func getContextImplementationsAsCtx() []context.Context {
-	implementations := []context.Context{
-		context.Background(),
-		ThinBackgroundContext(),
+func getContextImplementationsAsCtx() []TestContext {
+	implementations := []TestContext{
+		{Context: context.Background(), Name: "go/context"},
+		{Context: ThinBackgroundContext(), Name: "go-fatty-context"},
 	}
 
 	return implementations
 }
 
-func runBasicTestsOnCtx(ctx context.Context) {
-	fmt.Printf("Running context benchmarks...\n")
+func runBasicTestsOnCtx(tctx TestContext) {
+	fmt.Printf("Running context benchmarks for: %s\n", tctx.Name)
 
 	for _, size := range getContextInputPayloadSize() {
-		benchmarkContextLookup(ctx, size)
+		benchmarkContextLookup(tctx.Context, size)
 	}
 
 	testConcurrentContextAccess(1000)
+
+	fmt.Printf("=======================================\n")
 }
 
 // multiple consecutive context lookups on single thread

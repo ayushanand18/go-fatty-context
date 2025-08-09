@@ -16,3 +16,11 @@ writing a new value is O(1) op, since it would be simply creating a new ctx, and
 ## Test
 1. Run multiple tests to compare speedup at 100, 1_000, and 1_000_000 context values (why not 1_000_000? is there a reason on earth to keep those many vars in context - none perhaps <).
 2. Test for any consistency issues/race-around with multiple threads reading/writing on a single context.
+
+## Results
+------------------|---------|--------|------------
+Lib               | 100     | 1000   | 1_000_000
+------------------|---------|--------|------------
+`go/context`      |17.833µs |5.917µs | 5.843375ms
+`go-fatty-context`|416ns    |2.333µs | 4.226875ms
+------------------|---------|--------|------------
