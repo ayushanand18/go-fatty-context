@@ -18,9 +18,9 @@ writing a new value is O(1) op, since it would be simply creating a new ctx, and
 2. Test for any consistency issues/race-around with multiple threads reading/writing on a single context.
 
 ## Results
-------------------|---------|--------|------------
+
 Lib               | 100     | 1000   | 1_000_000
 ------------------|---------|--------|------------
 `go/context`      |17.833µs |5.917µs | 5.843375ms
 `go-fatty-context`|416ns    |2.333µs | 4.226875ms
-------------------|---------|--------|------------
+
